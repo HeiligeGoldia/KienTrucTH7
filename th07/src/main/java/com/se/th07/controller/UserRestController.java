@@ -28,7 +28,7 @@ public class UserRestController {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-		return restTemplate.exchange("http://localhost:8083/getUser" + uid, HttpMethod.GET, entity, String.class)
+		return restTemplate.exchange("http://localhost:8083/getUser/" + uid, HttpMethod.GET, entity, String.class)
 				.getBody();
 	}
 
@@ -41,13 +41,13 @@ public class UserRestController {
 		return restTemplate.exchange("http://localhost:8083/register", HttpMethod.POST, entity, String.class).getBody();
 	}
 
-	@RequestMapping(value = "/template/update", method = RequestMethod.PUT)
-	public String update(@RequestBody User User) {
+	@RequestMapping(value = "/template/update/{uid}", method = RequestMethod.PUT)
+	public String update(@PathVariable("uid") String uid, @RequestBody User User) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<User> entity = new HttpEntity<User>(User, headers);
 
-		return restTemplate.exchange("http://localhost:8083/updateUser", HttpMethod.PUT, entity, String.class).getBody();
+		return restTemplate.exchange("http://localhost:8083/updateUser/" + uid, HttpMethod.PUT, entity, String.class).getBody();
 	}
 
 	@RequestMapping(value = "/template/delete/{uid}", method = RequestMethod.DELETE)
